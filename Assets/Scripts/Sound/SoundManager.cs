@@ -5,13 +5,23 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     // Variables
-    [Header("Music InMenu Audio Source")]
-    public AudioSource musicInmenu;
+    [Header("Music Menu Audio Source")]
+    public AudioSource musicMenu;
+    public bool musicMenuExist;
+    [Header("Music Game Audio Source")]
+    public AudioSource musicGame;
+    public bool musicGameExist;
+    [Header("Sound Menu Audio Source")]
+    public AudioSource soundMenu;
+    public bool soundMenuExist;
+    [Header("Sound Game Audio Source")]
+    public AudioSource soundGame;
+    public bool soundGameExist;
 
     // Start is called before the first frame update
     void Start()
     {
-        musicInmenu = GameObject.Find("Sound Manager").transform.Find("Music in-menu").GetComponent<AudioSource>();
+        CheckAudioSourcesExistence();
     }
 
     // Update is called once per frame
@@ -21,4 +31,31 @@ public class SoundManager : MonoBehaviour
     }
 
     // Functions
+    private void CheckAudioSourcesExistence()
+    {
+        // Menu Music
+        musicMenuExist = GameObject.Find("Sound Manager").transform.Find("Music Menu");
+        if (musicMenuExist)
+        {
+            musicMenu = GameObject.Find("Sound Manager").transform.Find("Music Menu").GetComponent<AudioSource>();
+        }
+
+        musicGameExist = GameObject.Find("Sound Manager").transform.Find("Music Game");
+        if (musicGameExist)
+        {
+            musicGame = GameObject.Find("Sound Manager").transform.Find("Music Game").GetComponent<AudioSource>();
+        }
+
+        soundMenuExist = GameObject.Find("Sound Manager").transform.Find("Sound Menu");
+        if (soundMenuExist)
+        {
+            soundMenu = GameObject.Find("Sound Manager").transform.Find("Sound Menu").GetComponent<AudioSource>();
+        }
+
+        soundGameExist = GameObject.Find("Sound Manager").transform.Find("Sound game");
+        if (soundGameExist)
+        {
+            soundGame = GameObject.Find("Sound Manager").transform.Find("Sound Game").GetComponent<AudioSource>();
+        }
+    }
 }

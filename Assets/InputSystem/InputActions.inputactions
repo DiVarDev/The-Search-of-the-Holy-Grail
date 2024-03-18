@@ -2,7 +2,7 @@
     "name": "InputActions",
     "maps": [
         {
-            "name": "Ingame",
+            "name": "Player",
             "id": "d518615e-0cf3-4189-a058-0bff206b4d1d",
             "actions": [
                 {
@@ -154,34 +154,6 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "be7e6169-d2c5-4307-a837-16427f3354b9",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "1c15b2cf-7c15-4ab3-a0d6-8e05b69ec1e5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "b663be9b-da5e-470a-ad86-f950a3abb65c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }

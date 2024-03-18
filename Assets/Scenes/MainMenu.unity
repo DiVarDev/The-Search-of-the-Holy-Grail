@@ -911,7 +911,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7027674368025593071, guid: 861054d867764b9418dc7e4da2302bf5, type: 3}
       propertyPath: m_Name
-      value: Music in-menu
+      value: Music Menu
       objectReference: {fileID: 0}
     - target: {fileID: 7073263553663479211, guid: 861054d867764b9418dc7e4da2302bf5, type: 3}
       propertyPath: m_LocalPosition.x
