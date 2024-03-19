@@ -5,18 +5,18 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     // Variables
-    [Header("Music Menu Audio Source")]
-    public AudioSource musicMenu;
-    public bool musicMenuExist;
     [Header("Music Game Audio Source")]
     public AudioSource musicGame;
     public bool musicGameExist;
-    [Header("Sound Menu Audio Source")]
-    public AudioSource soundMenu;
-    public bool soundMenuExist;
     [Header("Sound Game Audio Source")]
     public AudioSource soundGame;
     public bool soundGameExist;
+    [Header("Music Menu Audio Source")]
+    public AudioSource musicMenu;
+    public bool musicMenuExist;
+    [Header("Sound Menu Audio Source")]
+    public AudioSource soundMenu;
+    public bool soundMenuExist;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviour
             soundMenu = GameObject.Find("Sound Manager").transform.Find("Sound Menu").GetComponent<AudioSource>();
         }
 
-        soundGameExist = GameObject.Find("Sound Manager").transform.Find("Sound game");
+        soundGameExist = GameObject.Find("Sound Manager").transform.Find("Sound Game");
         if (soundGameExist)
         {
             soundGame = GameObject.Find("Sound Manager").transform.Find("Sound Game").GetComponent<AudioSource>();

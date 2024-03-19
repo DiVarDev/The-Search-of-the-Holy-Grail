@@ -15,22 +15,25 @@ public class GameManager : MonoBehaviour
     public TMP_Text pointsPlayer;
     public TMP_Text timer;
     public float time;*/
-    [Header("Game Manager Settings")]
-    public GameObject game;
-    public AudioSource gameAudioSource;
-    [Header("Sound Manager Settings")]
-    public GameObject music;
-    public AudioSource musicAudioSource;
-    [Header("Audio Mixer and Subgroup mixers")]
+    [Header("Sound Manager")]
+    public GameObject soundManager;
+    public AudioSource soundManagerAudioSource;
     public AudioMixer masterMixer;
     [Range(0f, 1f)]
-    public float masterVolume;
-    public AudioMixer musicMixer;
-    [Range(0f, 1f)]
-    public float musicVolume;
+    public float masterVolume = 1.0f;
+    [Header("Sound Game")]
+    public GameObject soundGame;
+    public AudioSource soundGameAudioSource;
     public AudioMixer gameMixer;
     [Range(0f, 1f)]
-    public float gameVolume;
+    public float soundGameVolume = 1.0f;
+    [Header("Music Game")]
+    public GameObject musicGame;
+    public AudioSource musicGameAudioSource;
+    public AudioMixer musicMixer;
+    [Range(0f, 1f)]
+    public float musicGameVolume = 1.0f;
+        
 
     // Start is called before the first frame update
     void Start()
@@ -39,23 +42,21 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
 
         player = GameObject.Find("Player");
-        //pointsPlayer.text = player.GetComponent<PlayerMovement>().score.ToString();
 
-        game = GameObject.Find("Sound Manager").transform.Find("Game").gameObject;
-        gameAudioSource = game.GetComponent<AudioSource>();
+        soundManager = GameObject.Find("Sound Manager");
+        soundManagerAudioSource = soundManager.GetComponent<AudioSource>();
 
-        music = GameObject.Find("Sound Manager").transform.Find("Music").gameObject;
-        musicAudioSource = music.GetComponent<AudioSource>();
+        soundGame = soundManager.transform.Find("Sound Game").gameObject;
+        soundGameAudioSource = soundGame.GetComponent<AudioSource>();
 
-        masterMixer = GameObject.Find("Sound Manager").transform.Find("Master").gameObject.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer;
-        musicMixer = GameObject.Find("Sound Manager").transform.Find("Music").gameObject.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer;
-        gameMixer = GameObject.Find("Sound Manager").transform.Find("Game").gameObject.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer;
-
+        musicGame = soundManager.transform.Find("Music Game").gameObject;
+        musicGameAudioSource = musicGame.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        isPlayerDead = player.GetComponent<PlayerStats>().isPlayerDead;
+        playerWon = player.GetComponent<PlayerStats>().playerWon;
     }
 }

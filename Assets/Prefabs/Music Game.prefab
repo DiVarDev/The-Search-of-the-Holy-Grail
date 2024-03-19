@@ -44,7 +44,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -4927426833984345451, guid: 5c5710135cc8d674490345bfdcb0a6ec, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -149,3 +149,5 @@ MonoBehaviour:
   currentSong: {fileID: 0}
   songLenght: 0
   audioSourcePlaytime: 0
+  musicPlayerPanel: {fileID: 0}
+  musicPlayer: {fileID: 0}

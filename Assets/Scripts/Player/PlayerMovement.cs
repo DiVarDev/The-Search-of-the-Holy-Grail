@@ -13,12 +13,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3.0f;
     public float speed = 5.0f;
     public bool isGrounded;
-    public bool isPlayerAlive;
-    public bool hasPlayerWon;
-    [Header("Player Sounds")]
-    public AudioClip jump;
-    public AudioClip hurt;
-    public AudioClip death;
     [Header("World Variables")]
     public float gravity = -9.8f;
 
@@ -26,8 +20,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        isPlayerAlive = true;
-        hasPlayerWon = false;
     }
 
     // Update is called once per frame

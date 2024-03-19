@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
@@ -42,8 +44,19 @@ public class MusicManager : MonoBehaviour
 
         try
         {
-            musicPlayerPanel = GameObject.Find("Canvas").transform.Find("Menu Panel").transform.Find("Music Player Panel").gameObject;
-            musicPlayer = GameObject.Find("Canvas").transform.Find("Menu Panel").transform.Find("Music Player Panel").GetComponent<MusicPlayer>();
+            int scene = SceneManager.GetActiveScene().buildIndex;
+            switch (scene)
+            {
+                case 0:
+                    musicPlayerPanel = GameObject.Find("Canvas").transform.Find("Menu Panel").transform.Find("Music Player Panel").gameObject;
+                    musicPlayer = GameObject.Find("Canvas").transform.Find("Menu Panel").transform.Find("Music Player Panel").GetComponent<MusicPlayer>();
+                    break;
+
+                case 1:
+                    musicPlayerPanel = GameObject.Find("Game User Interface").transform.Find("Canvas").transform.Find("Music Player Panel").gameObject;
+                    musicPlayer = GameObject.Find("Game User Interface").transform.Find("Canvas").transform.Find("Music Player Panel").GetComponent<MusicPlayer>();
+                    break;
+            }
         }
         catch (NullReferenceException ex)
         {

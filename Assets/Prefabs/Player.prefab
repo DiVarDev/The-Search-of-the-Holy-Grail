@@ -216,8 +216,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 100
+  isPlayerHurt: 0
   isPlayerDead: 0
   playerWon: 0
+  jump: {fileID: 8300000, guid: 9bbaf8025975e584ba1b1337ac9e4663, type: 3}
+  hurt: {fileID: 8300000, guid: b29a4a4091849b14e83529adf74d5428, type: 3}
+  death: {fileID: 8300000, guid: 119a924f54c584944b9a449879bd9ca3, type: 3}
 --- !u!114 &1180588664103978136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,11 +250,6 @@ MonoBehaviour:
   jumpHeight: 4.5
   speed: 5
   isGrounded: 0
-  isPlayerAlive: 0
-  hasPlayerWon: 0
-  jump: {fileID: 8300000, guid: 9bbaf8025975e584ba1b1337ac9e4663, type: 3}
-  hurt: {fileID: 8300000, guid: b29a4a4091849b14e83529adf74d5428, type: 3}
-  death: {fileID: 8300000, guid: 119a924f54c584944b9a449879bd9ca3, type: 3}
   gravity: -9.8
 --- !u!114 &6190473417759073518
 MonoBehaviour:

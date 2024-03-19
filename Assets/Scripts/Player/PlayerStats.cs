@@ -7,8 +7,13 @@ public class PlayerStats : MonoBehaviour
     // Variables
     [Header("Player Statistics")]
     public int playerHealth = 100;
+    public bool isPlayerHurt = false;
     public bool isPlayerDead = false;
     public bool playerWon = false;
+    [Header("Player Sounds")]
+    public AudioClip jump;
+    public AudioClip hurt;
+    public AudioClip death;
 
     // Start is called before the first frame update
     void Start()
@@ -36,11 +41,19 @@ public class PlayerStats : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Lava")
         {
-            isPlayerDead = true;
-            //gameManager.ActionHappenedSound(death);
-            Debug.Log("Player was hurt by an enemy or melted to death...");
-            gameObject.SetActive(false);
-            //Invoke("LoadLose", death.length);
+            if (playerHealth > 0)
+            {
+                playerHealth -= 3;
+                //gameManager.ActionHappenedSound(hurt);
+            }
+            else if (playerHealth <= 0)
+            {
+                isPlayerDead = true;
+                //gameManager.ActionHappenedSound(death);
+                Debug.Log("Player was hurt by an enemy or melted to death...");
+                gameObject.SetActive(false);
+                //Invoke("LoadLose", death.length);
+            }
         }
 
         if (other.gameObject.tag == "Key")
