@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
 {
@@ -11,7 +14,6 @@ public class MusicManager : MonoBehaviour
     public List<AudioClip> musicList;
     public int currentTrackSelected;
     public int musicListCount;
-
     [Header("Music Audio Source")]
     public AudioSource audioSource;
     [Range(0.0f, 1.0f)]
@@ -19,6 +21,9 @@ public class MusicManager : MonoBehaviour
     public AudioClip currentSong;
     public float songLenght;
     public float audioSourcePlaytime;
+    [Header("Music Player Components")]
+    public GameObject musicPlayerPanel;
+    public MusicPlayer musicPlayer;
 
 
     // Start is called before the first frame update
@@ -34,6 +39,22 @@ public class MusicManager : MonoBehaviour
         audioSource.clip = musicList.ElementAt(currentTrackSelected);
         currentSong = audioSource.clip;
         songLenght = audioSource.clip.length;
+
+        try
+        {
+            musicPlayerPanel = GameObject.Find("Canvas").transform.Find("Menu Panel").transform.Find("Music Player Panel").gameObject;
+            musicPlayer = GameObject.Find("Canvas").transform.Find("Menu Panel").transform.Find("Music Player Panel").GetComponent<MusicPlayer>();
+        }
+        catch (NullReferenceException ex)
+        {
+            Debug.LogError($"Error finding Music Player Panel: {ex.Message}. This might look as a bad thing but I can asure you it is not ;)");
+        }
+        if (musicPlayerPanel != null)
+        {
+            musicPlayer.SetMusicNameText(currentSong);
+            musicPlayer.SetSliderValue(currentSong);
+        }
+        
         PlayMusic();
     }
 
@@ -42,7 +63,10 @@ public class MusicManager : MonoBehaviour
     {
         audioSource.volume = volume;
         audioSourcePlaytime = audioSource.time;
-
+        if (musicPlayerPanel != null)
+        {
+            musicPlayer.MusicProgressBar(audioSourcePlaytime, currentSong);
+        }
         if (audioSourcePlaytime >= songLenght)
         {
             StopMusic();
@@ -65,6 +89,11 @@ public class MusicManager : MonoBehaviour
         audioSource.clip = musicList.ElementAt(currentTrackSelected);
         currentSong = audioSource.clip;
         songLenght = audioSource.clip.length;
+        if (musicPlayerPanel)
+        {
+            musicPlayer.SetMusicNameText(currentSong);
+            musicPlayer.SetSliderValue(currentSong);
+        }
     }
 
     public void PlayMusic()

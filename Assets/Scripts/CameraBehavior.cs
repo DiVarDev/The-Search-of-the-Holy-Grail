@@ -13,6 +13,7 @@ public class CameraBehavior : MonoBehaviour
     public Vector3 cameraPosition;
     public Vector2 minimum;
     public Vector2 maximum;
+    public Vector2 offsets;
     public float smoothing;
     public Vector2 velocity;
 
@@ -53,6 +54,6 @@ public class CameraBehavior : MonoBehaviour
         float posX = Mathf.SmoothDamp(camera.x, target.x, ref velocity.x, smoothing);
         float posY = Mathf.SmoothDamp(camera.y, target.y, ref velocity.x, smoothing);
 
-        cameraFollowingPlayer.transform.position = new Vector3(Mathf.Clamp(posX, minimum.x, maximum.x), Mathf.Clamp(posY, minimum.y, maximum.y), cameraFollowingPlayer.transform.position.z);
+        cameraFollowingPlayer.transform.position = new Vector3(Mathf.Clamp(posX, minimum.x, maximum.x) + offsets.x, Mathf.Clamp(posY, minimum.y, maximum.y) + offsets.y, cameraFollowingPlayer.transform.position.z);
     }
 }

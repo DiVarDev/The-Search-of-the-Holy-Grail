@@ -85,33 +85,5 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = true;
             Debug.Log("Player touching ground or a platform!");
         }
-
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Lava")
-        {
-            isPlayerAlive = false;
-            //gameManager.ActionHappenedSound(death);
-            Debug.Log("Player was hurt by an enemy or melted to death...");
-            gameObject.SetActive(false);
-            //Invoke("LoadLose", death.length);
-        }
-
-        if (other.gameObject.tag == "Point")
-        {
-            //score++;
-            Debug.Log("Player collected a coin!");
-        }
-    }
-
-    // Triggers
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Chalice")
-        {
-            hasPlayerWon = true;
-            //gameManager.ActionHappenedSound(won);
-            Debug.Log("Player finished the level!");
-            gameObject.SetActive(false);
-            //Invoke("LoadWin", won.length);
-        }
     }
 }
