@@ -9,6 +9,9 @@ TagManager:
   - Key
   - Grail
   - Barrier
+  - Enemy
+  - Lava
+  - Sword
   layers:
   - Default
   - TransparentFX

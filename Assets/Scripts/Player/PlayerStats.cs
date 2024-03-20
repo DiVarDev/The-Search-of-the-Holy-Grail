@@ -6,15 +6,29 @@ public class PlayerStats : MonoBehaviour
 {
     // Variables
     [Header("Player Statistics")]
-    public int playerHealth;
+    public int health;
+    public int attackDamage;
     public int keys;
-    public bool isPlayerHurt = false;
-    public bool isPlayerDead = false;
+    public bool isHurt = false;
+    public bool isDead = false;
+    public bool isAttacking = false;
+    public bool isLookingLeft = false;
+    public bool isLookingRight = false;
+    public bool isWalking = false;
+    public bool isIdle = false;
     public bool playerWon = false;
+    [Header("Player Components")]
+    public GameObject sword;
+    [Header("Player Animations")]
+    public Animator animator;
     [Header("Player Sounds")]
     public AudioClip jump;
     public AudioClip hurt;
     public AudioClip death;
+    public AudioClip attack;
+    public AudioClip hit;
+    public AudioClip walk;
+    public AudioClip idle;
     public AudioClip won;
     public AudioClip key;
     public AudioClip message;
@@ -25,22 +39,25 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         soundGame = GameObject.Find("Sound Manager").transform.Find("Sound Game").GetComponent<AudioSource>();
-        playerHealth = 100;
+        health = 100;
+        attackDamage = 3;
         keys = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         CheckPlayerStatus();
     }
 
     // Functions
     private void CheckPlayerStatus()
     {
-        if (playerHealth <= 0)
+        if (health <= 0)
         {
-            isPlayerDead = true;
+            isDead = true;
         }
     }
 
@@ -49,31 +66,34 @@ public class PlayerStats : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            if (playerHealth > 0)
+            if (transform.GetComponent<PolygonCollider2D>().IsTouching(other.collider))
             {
-                playerHealth -= 3;
-                //gameManager.ActionHappenedSound(hurt);
-            }
-            else if (playerHealth <= 0)
-            {
-                isPlayerDead = true;
-                soundGame.PlayOneShot(death);
-                Debug.Log("Player was hurt by an enemy to death...");
-                gameObject.SetActive(false);
-                //Invoke("LoadLose", death.length);
+                if (health > 0)
+                {
+                    health -= other.gameObject.GetComponent<EnemyStats>().attackDamage;
+                    soundGame.PlayOneShot(hurt);
+                }
+                else if (health <= 0)
+                {
+                    isDead = true;
+                    soundGame.PlayOneShot(death);
+                    Debug.Log("Player was hurt by an enemy to death...");
+                    gameObject.SetActive(false);
+                    //Invoke("LoadLose", death.length);
+                }
             }
         }
         
         if (other.gameObject.tag == "Lava")
         {
-            if (playerHealth > 0)
+            if (health > 0)
             {
-                playerHealth -= 5;
+                health -= 5;
                 soundGame.PlayOneShot(hurt);
             }
-            else if (playerHealth <= 0)
+            else if (health <= 0)
             {
-                isPlayerDead = true;
+                isDead = true;
                 soundGame.PlayOneShot(death);
                 Debug.Log("Player was melted to death...");
                 gameObject.SetActive(false);

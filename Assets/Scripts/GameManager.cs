@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class GameManager : MonoBehaviour
     public bool playerWon;
     public int playerScore;
     [Header("UI Things")]
-    public TMP_Text healthText;
+    //public TMP_Text healthText;
+    public Slider healthSlider;
     public TMP_Text keysText;
     public float time;
     [Header("Sound Manager")]
@@ -49,7 +51,9 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         keys = 0;
 
-        healthText = GameObject.Find("Canvas").transform.Find("Player Heath Text").GetComponent<TMP_Text>();
+        //healthText = GameObject.Find("Canvas").transform.Find("Player Heath Text").GetComponent<TMP_Text>();
+        healthSlider = GameObject.Find("Canvas").transform.Find("Health Slider").GetComponent<Slider>();
+        healthSlider.maxValue = player.GetComponent<PlayerStats>().health;
         keysText = GameObject.Find("Canvas").transform.Find("Player Keys Text").GetComponent<TMP_Text>();
 
         soundManager = GameObject.Find("Sound Manager");
@@ -65,12 +69,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        health = player.GetComponent<PlayerStats>().playerHealth;
-        healthText.text = health.ToString();
+        health = player.GetComponent<PlayerStats>().health;
+        //healthText.text = health.ToString();
+        healthSlider.value = player.GetComponent<PlayerStats>().health;
         keys = player.GetComponent<PlayerStats>().keys;
         keysText.text = keys.ToString();
 
-        isPlayerDead = player.GetComponent<PlayerStats>().isPlayerDead;
+        isPlayerDead = player.GetComponent<PlayerStats>().isDead;
         playerWon = player.GetComponent<PlayerStats>().playerWon;
     }
 }

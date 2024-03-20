@@ -13,6 +13,11 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3.0f;
     public float speed = 5.0f;
     public bool isGrounded;
+    public bool isAttacking = false;
+    public bool isLookingLeft = false;
+    public bool isLookingRight = false;
+    public bool isWalking = false;
+    public bool isIdle = false;
     [Header("Player Stats")]
     public PlayerStats playerStats;
     [Header("World Variables")]
@@ -28,7 +33,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        isAttacking = playerStats.animator.GetBool("isAttacking");
+        isLookingLeft = playerStats.animator.GetBool("isLookingLeft");
+        isLookingRight = playerStats.animator.GetBool("isLookingRight");
+
+        if (!isLookingLeft && !isLookingRight)
+        {
+
+        }
     }
 
     // Functions
@@ -43,6 +55,23 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && axisSpeeds.y < 0)
         {
             axisSpeeds.y = gravity;
+        }
+
+        if (input.x <= -0.1)
+        {
+            playerStats.animator.SetBool("isLookingLeft", true);
+            playerStats.animator.SetBool("isLookingRight", false);
+            isIdle = false;
+        }
+        else if(input.x >= 0.1)
+        {
+            playerStats.animator.SetBool("isLookingRight", true);
+            playerStats.animator.SetBool("isLookingLeft", false);
+            isIdle = false;
+        }
+        else
+        {
+            isIdle = true;
         }
         //controller.Move(playervelocity * Time.deltaTime);
         transform.Translate(moveDirection * speed * Time.deltaTime);
@@ -69,7 +98,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack()
     {
+        if (!isAttacking)
+        {
+            playerStats.animator.SetBool("isAttacking", true);
+        }
+        Debug.Log("Player attacked!");
+        if (isAttacking)
+        {
 
+            playerStats.soundGame.PlayOneShot(playerStats.attack);  // here we send the audio clip of jumping to the game manager
+                                                                    // to process it and play it on the general audio source
+                                                                    //playervelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+            playerStats.animator.SetBool("isAttacking", false);
+        }
     }
 
     // Collisions

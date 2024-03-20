@@ -79,6 +79,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""0f9d4370-4912-4dc6-8b73-5301f130eaf1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""WASD/Arrow Keys"",
                     ""id"": ""220b81a5-2322-48f8-9fc2-b2a0e2dc1303"",
                     ""path"": ""2DVector"",
