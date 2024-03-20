@@ -6,7 +6,8 @@ public class PlayerStats : MonoBehaviour
 {
     // Variables
     [Header("Player Statistics")]
-    public int playerHealth = 100;
+    public int playerHealth;
+    public int keys;
     public bool isPlayerHurt = false;
     public bool isPlayerDead = false;
     public bool playerWon = false;
@@ -14,11 +15,18 @@ public class PlayerStats : MonoBehaviour
     public AudioClip jump;
     public AudioClip hurt;
     public AudioClip death;
+    public AudioClip won;
+    public AudioClip key;
+    public AudioClip message;
+    [Header("Player Sounds")]
+    public AudioSource soundGame;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        soundGame = GameObject.Find("Sound Manager").transform.Find("Sound Game").GetComponent<AudioSource>();
+        playerHealth = 100;
+        keys = 0;
     }
 
     // Update is called once per frame
@@ -39,7 +47,7 @@ public class PlayerStats : MonoBehaviour
     // Collisions
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Lava")
+        if (other.gameObject.tag == "Enemy")
         {
             if (playerHealth > 0)
             {
@@ -49,30 +57,59 @@ public class PlayerStats : MonoBehaviour
             else if (playerHealth <= 0)
             {
                 isPlayerDead = true;
-                //gameManager.ActionHappenedSound(death);
-                Debug.Log("Player was hurt by an enemy or melted to death...");
+                soundGame.PlayOneShot(death);
+                Debug.Log("Player was hurt by an enemy to death...");
+                gameObject.SetActive(false);
+                //Invoke("LoadLose", death.length);
+            }
+        }
+        
+        if (other.gameObject.tag == "Lava")
+        {
+            if (playerHealth > 0)
+            {
+                playerHealth -= 5;
+                soundGame.PlayOneShot(hurt);
+            }
+            else if (playerHealth <= 0)
+            {
+                isPlayerDead = true;
+                soundGame.PlayOneShot(death);
+                Debug.Log("Player was melted to death...");
                 gameObject.SetActive(false);
                 //Invoke("LoadLose", death.length);
             }
         }
 
+        if (other.gameObject.tag == "Barrier")
+        {
+            soundGame.PlayOneShot(message);
+            // Show message
+            Debug.Log("Player has collided with a barrier!");
+            //other.gameObject.SetActive(false);
+        }
+
         if (other.gameObject.tag == "Key")
         {
-            //score++;
-            Debug.Log("Player collected a coin!");
+            soundGame.PlayOneShot(key);
+            keys++;
+            Debug.Log("Player collected a key!");
+            other.gameObject.SetActive(false);
+        }
+
+        if (other.gameObject.tag == "Grail")
+        {
+            playerWon = true;
+            soundGame.PlayOneShot(won);
+            Debug.Log("Player retrieved the holy grail and finished the level!");
+            //other.gameObject.SetActive(false);
+            //Invoke("LoadWin", won.length);
         }
     }
 
     // Triggers
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Chalice")
-        {
-            playerWon = true;
-            //gameManager.ActionHappenedSound(won);
-            Debug.Log("Player finished the level!");
-            gameObject.SetActive(false);
-            //Invoke("LoadWin", won.length);
-        }
+        
     }
 }

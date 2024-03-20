@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2937531017258227022}
   - component: {fileID: 8856490133287446443}
   m_Layer: 0
-  m_Name: Chalice of Life
-  m_TagString: Chalice
+  m_Name: Holy Grail
+  m_TagString: Grail
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
   - {x: 1.2800007, y: -1.2799999, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -38310
+  m_InstanceId: 46008
   m_LocalBounds:
     m_Center: {x: 0.00000023841858, y: 0.00000011920929, z: 0}
     m_Extent: {x: 1.2800004, y: 1.28, z: 0}

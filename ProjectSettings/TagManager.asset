@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Chalice
   - Ground
   - Platform
   - Key
+  - Grail
+  - Barrier
   layers:
   - Default
   - TransparentFX

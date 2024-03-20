@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,13 +9,15 @@ public class GameManager : MonoBehaviour
     // Variables
     [Header("Player Info")]
     public GameObject player;
+    public int health;
+    public int keys;
     public bool isPlayerDead;
     public bool playerWon;
-    /*public int playerScore;
+    public int playerScore;
     [Header("UI Things")]
-    public TMP_Text pointsPlayer;
-    public TMP_Text timer;
-    public float time;*/
+    public TMP_Text healthText;
+    public TMP_Text keysText;
+    public float time;
     [Header("Sound Manager")]
     public GameObject soundManager;
     public AudioSource soundManagerAudioSource;
@@ -38,10 +41,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         player = GameObject.Find("Player");
+        keys = 0;
+
+        healthText = GameObject.Find("Canvas").transform.Find("Player Heath Text").GetComponent<TMP_Text>();
+        keysText = GameObject.Find("Canvas").transform.Find("Player Keys Text").GetComponent<TMP_Text>();
 
         soundManager = GameObject.Find("Sound Manager");
         soundManagerAudioSource = soundManager.GetComponent<AudioSource>();
@@ -56,6 +65,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        health = player.GetComponent<PlayerStats>().playerHealth;
+        healthText.text = health.ToString();
+        keys = player.GetComponent<PlayerStats>().keys;
+        keysText.text = keys.ToString();
+
         isPlayerDead = player.GetComponent<PlayerStats>().isPlayerDead;
         playerWon = player.GetComponent<PlayerStats>().playerWon;
     }

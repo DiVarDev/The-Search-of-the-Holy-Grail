@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3.0f;
     public float speed = 5.0f;
     public bool isGrounded;
+    [Header("Player Stats")]
+    public PlayerStats playerStats;
     [Header("World Variables")]
     public float gravity = -9.8f;
 
@@ -20,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -52,9 +55,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Jumping");
             rigidBody.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
-            //gameManager.ActionHappenedSound(jump);    // here we send the audio clip of jumping to the game manager
-                                                      // to process it and play it on the general audio source
-                                                      //playervelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+            playerStats.soundGame.PlayOneShot(playerStats.jump);    // here we send the audio clip of jumping to the game manager
+                                                                    // to process it and play it on the general audio source
+                                                                    //playervelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
             isGrounded = false;
         }
 
