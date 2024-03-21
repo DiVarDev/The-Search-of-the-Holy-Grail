@@ -5,9 +5,6 @@ using UnityEngine;
 public class CameraBehavior : MonoBehaviour
 {
     // Variables
-    [Header("Player")]
-    public GameObject player;
-    public Vector3 playerPosition;
     [Header("Camera")]
     public GameObject cameraFollowingPlayer;
     public Vector3 cameraPosition;
@@ -16,6 +13,9 @@ public class CameraBehavior : MonoBehaviour
     public Vector2 offsets;
     public float smoothing;
     public Vector2 velocity;
+    [Header("Player")]
+    public GameObject player;
+    public Vector3 playerPosition;
 
     // Start is called before the first frame update
     void Start()

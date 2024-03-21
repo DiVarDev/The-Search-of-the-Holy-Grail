@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class SoundManager : MonoBehaviour
 {
     // Variables
-    public bool isObjectDestroyOnLoad = false;
+    public bool playMusic = true;
     [Header("Current Scene Information")]
     public int sceneIndex;
     public string sceneName;
@@ -36,10 +36,6 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!isObjectDestroyOnLoad)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
         sceneName = SceneManager.GetActiveScene().name;
         switch (sceneIndex)
@@ -95,7 +91,10 @@ public class SoundManager : MonoBehaviour
             Debug.LogError($"Error finding Music Player Panel: {ex.Message}.");
         }*/
 
-        PlayMusic();
+        if (playMusic)
+        {
+            PlayMusic();
+        }
     }
 
     // Update is called once per frame
@@ -111,7 +110,10 @@ public class SoundManager : MonoBehaviour
         {
             StopMusic();
             NextTrack();
-            PlayMusic();
+            if (playMusic)
+            {
+                PlayMusic();
+            }
         }
     }
 

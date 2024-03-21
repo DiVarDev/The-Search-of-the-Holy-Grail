@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool isAttacking = false;
     public bool isLookingLeft = false;
-    public bool isLookingRight = false;
+    public bool isLookingRight = true;
     public bool isWalking = false;
     public bool isIdle = false;
     [Header("Player Stats")]
@@ -28,19 +28,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         playerStats = GetComponent<PlayerStats>();
+        playerStats.animator.SetBool("isLookingRight", true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        isAttacking = playerStats.animator.GetBool("isAttacking");
-        isLookingLeft = playerStats.animator.GetBool("isLookingLeft");
-        isLookingRight = playerStats.animator.GetBool("isLookingRight");
-
-        if (!isLookingLeft && !isLookingRight)
-        {
-
-        }
+        
     }
 
     // Functions
@@ -84,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Jumping");
             rigidBody.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
-            playerStats.soundGame.PlayOneShot(playerStats.jump);    // here we send the audio clip of jumping to the game manager
+            playerStats.audioSource.PlayOneShot(playerStats.jump);    // here we send the audio clip of jumping to the game manager
                                                                     // to process it and play it on the general audio source
                                                                     //playervelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
             isGrounded = false;
@@ -98,18 +92,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack()
     {
-        if (!isAttacking)
-        {
-            playerStats.animator.SetBool("isAttacking", true);
-        }
-        Debug.Log("Player attacked!");
+        isLookingLeft = playerStats.animator.GetBool("isLookingLeft");
+        isLookingRight = playerStats.animator.GetBool("isLookingRight");
+        isAttacking = true;
         if (isAttacking)
         {
-
-            playerStats.soundGame.PlayOneShot(playerStats.attack);  // here we send the audio clip of jumping to the game manager
-                                                                    // to process it and play it on the general audio source
-                                                                    //playervelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-            playerStats.animator.SetBool("isAttacking", false);
+            Debug.Log("Player attacked!");
+            playerStats.animator.SetTrigger("isAttacking");
+            playerStats.audioSource.PlayOneShot(playerStats.attack);  // here we send the audio clip of jumping to the game manager
+                                                                      // to process it and play it on the general audio source
+            isAttacking = false;
         }
     }
 

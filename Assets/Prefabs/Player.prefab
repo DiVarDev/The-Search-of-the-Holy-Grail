@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 2389616502445801032}
   - component: {fileID: 9021725580810601181}
   - component: {fileID: 3748937079451674072}
+  - component: {fileID: 2003920294848656763}
   - component: {fileID: 796579855498382688}
   - component: {fileID: 1180588664103978136}
   - component: {fileID: 202756077662189656}
   - component: {fileID: 6190473417759073518}
-  - component: {fileID: 2003920294848656763}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -51,9 +51,9 @@ AudioSource:
   m_GameObject: {fileID: 337428473243330307}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4184855212334573996, guid: 5c5710135cc8d674490345bfdcb0a6ec, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -218,8 +218,8 @@ PolygonCollider2D:
       - {x: -0.28992558, y: -0.117508054}
       - {x: -0.28372195, y: -0.61883336}
       - {x: -0.16550589, y: -0.616719}
-      - {x: -0.16802782, y: -0.7368611}
-      - {x: 0.16529171, y: -0.7337222}
+      - {x: -0.16176742, y: -0.70486426}
+      - {x: 0.16598742, y: -0.70242107}
       - {x: 0.16390246, y: -0.61802757}
       - {x: 0.28744438, y: -0.6147084}
   m_UseDelaunayMesh: 0
@@ -302,6 +302,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2003920294848656763
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337428473243330307}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a3a07281915053e4587f805923a8f6c0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &796579855498382688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,8 +335,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a926aaac049b44cb171257f5c837d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   health: 0
-  attackDamage: 0
+  attackDamage: 3
   keys: 0
   isHurt: 0
   isDead: 0
@@ -331,12 +353,12 @@ MonoBehaviour:
   hurt: {fileID: 8300000, guid: b29a4a4091849b14e83529adf74d5428, type: 3}
   death: {fileID: 8300000, guid: 119a924f54c584944b9a449879bd9ca3, type: 3}
   attack: {fileID: 8300000, guid: 7c19881a28faa8548927a0f8e68fff4d, type: 3}
-  hit: {fileID: 0}
   walk: {fileID: 8300000, guid: b5edb831dea5a3841a01aa9111327a25, type: 3}
   idle: {fileID: 0}
   won: {fileID: 8300000, guid: 508f0cf0fd3800a46a8d3e065bce27dc, type: 3}
   key: {fileID: 8300000, guid: b1cbabd9bd86e194bb9a74c703d7d37f, type: 3}
   message: {fileID: 8300000, guid: b8949f4d02d000e45a87612b3c5cbebd, type: 3}
+  audioSource: {fileID: 6071610552458231237}
   soundGame: {fileID: 0}
 --- !u!114 &1180588664103978136
 MonoBehaviour:
@@ -399,31 +421,10 @@ MonoBehaviour:
   - {x: 0.96000004, y: -0.96000004, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 34322
+  m_InstanceId: 47124
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.96000004, y: 0.96000004, z: 0}
---- !u!95 &2003920294848656763
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337428473243330307}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a3a07281915053e4587f805923a8f6c0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &975661811052596222
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +438,7 @@ GameObject:
   - component: {fileID: 4970734694237640213}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,9 +452,9 @@ Transform:
   m_GameObject: {fileID: 975661811052596222}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.514, y: 0.06, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4170819084674733282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -554,10 +555,15 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -0.5, y: -0.5}
-      - {x: 0.25, y: -0.5}
-      - {x: 0.5, y: -0.1875}
+      - {x: -0.0021800995, y: -0.5040028}
+      - {x: 0.13194942, y: -0.36830354}
+      - {x: 0.12573242, y: -0.12345433}
+      - {x: 0.5031605, y: 0.19319391}
       - {x: 0.5, y: 0.5}
-      - {x: -0.5, y: 0.5}
+      - {x: 0.19253635, y: 0.50948}
+      - {x: -0.13341141, y: 0.12877417}
+      - {x: -0.3733406, y: 0.12806869}
+      - {x: -0.5040026, y: -0.0023584366}
   m_UseDelaunayMesh: 0
 --- !u!1 &7000024624440363004
 GameObject:
@@ -611,7 +617,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: cd9806c4
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -620,7 +626,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensityEnabled: 1
   m_ShadowIntensity: 0.75
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75

@@ -6,8 +6,9 @@ public class EnemyStats : MonoBehaviour
 {
     // Variables
     [Header("Enemy Statistics")]
-    public int health = 25;
-    public int attackDamage = 3;
+    public int maxHealth = 25;
+    public int health;
+    public int attackDamage = 5;
     public bool hasJump = false;
     public bool isHurt = false;
     public bool isDead = false;
@@ -22,25 +23,34 @@ public class EnemyStats : MonoBehaviour
     public AudioClip idle;
     public AudioClip message;
     [Header("Enemy Sounds")]
+    public AudioSource audioSource;
     public AudioSource soundGame;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = 25;
-        attackDamage = 3;
+        health = maxHealth;
+
+        soundGame = GameObject.Find("Sound Manager").transform.Find("Sound Game").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CheckEnemyStatus();
     }
 
     // Functions
-    public void LosesHealth(int value)
+    public void CheckEnemyStatus()
     {
-        
+        if (health <= 0)
+        {
+            isDead = true;
+            soundGame.PlayOneShot(death);
+            Debug.Log("Enemy was hurt by a player to death...");
+            gameObject.SetActive(false);
+            //Invoke("LoadLose", death.length);
+        }
     }
 
     // Collistions
@@ -51,22 +61,15 @@ public class EnemyStats : MonoBehaviour
             Debug.Log("Enemy touching ground or a platform!");
         }
 
-        if (other.gameObject.tag == "Sword")
+        if (other.gameObject.tag == "Player")
         {
-            if (transform.GetComponent<CapsuleCollider2D>().IsTouching(other.collider))
+            if (transform.GetComponent<CapsuleCollider2D>().IsTouching(other.gameObject.transform.Find("Sword").GetComponent<PolygonCollider2D>()))
             {
                 if (health > 0)
                 {
                     health -= other.gameObject.GetComponent<PlayerStats>().attackDamage;
-                    soundGame.PlayOneShot(hurt);
-                }
-                else if (health <= 0)
-                {
-                    isDead = true;
-                    soundGame.PlayOneShot(death);
-                    Debug.Log("Enemy was hurt by a player to death...");
-                    gameObject.SetActive(false);
-                    //Invoke("LoadLose", death.length);
+                    audioSource.PlayOneShot(hurt);
+                    Debug.Log("Enemy is taking damage...");
                 }
             }
         }

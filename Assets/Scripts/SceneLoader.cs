@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
     {
         
     }
-
+    
     // Functions
     public void LoadSceneAsyncByIndex(int scene) // Function to load Scene by Index
     {
