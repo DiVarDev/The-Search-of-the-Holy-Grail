@@ -25,10 +25,12 @@ public class SoundManager : MonoBehaviour
     public string currentSong;
     public float songLenght;
     [Header("Music Audio Source")]
-    public AudioSource audioSource;
+    public AudioSource musicMudioSource;
     [Range(0.0f, 1.0f)]
     public float volume;
     public float audioSourcePlaytime;
+    [Header("Child Game Objects")]
+    public GameObject soundGameGameObject;
     [Header("Music Player Components")]
     public GameObject musicPlayerPanel;
     public MusicPlayer musicPlayer;
@@ -42,32 +44,32 @@ public class SoundManager : MonoBehaviour
         {
             case 0:
                 musicListSelected = musicMenuList;
-                audioSource = gameObject.transform.Find("Music Menu").GetComponent<AudioSource>();
+                musicMudioSource = transform.Find("Music Menu").GetComponent<AudioSource>();
                 break;
 
             case 1:
                 musicListSelected = musicLightForestList;
-                audioSource = gameObject.transform.Find("Music Game").GetComponent<AudioSource>();
+                musicMudioSource = transform.Find("Music Game").GetComponent<AudioSource>();
                 break;
 
             case 2:
                 musicListSelected = musicDarkForestList;
-                audioSource = gameObject.transform.Find("Music Game").GetComponent<AudioSource>();
+                musicMudioSource = transform.Find("Music Game").GetComponent<AudioSource>();
                 break;
 
             case 3:
                 musicListSelected = musicDungeonList;
-                audioSource = gameObject.transform.Find("Music Game").GetComponent<AudioSource>();
+                musicMudioSource = transform.Find("Music Game").GetComponent<AudioSource>();
                 break;
 
             case 4:
                 musicListSelected = musicLoseMenuList;
-                audioSource = gameObject.transform.Find("Music Menu").GetComponent<AudioSource>();
+                musicMudioSource = transform.Find("Music Menu").GetComponent<AudioSource>();
                 break;
 
             case 5:
                 musicListSelected = musicWinMenuList;
-                audioSource = gameObject.transform.Find("Music Menu").GetComponent<AudioSource>();
+                musicMudioSource = transform.Find("Music Menu").GetComponent<AudioSource>();
                 break;
         }
 
@@ -76,15 +78,15 @@ public class SoundManager : MonoBehaviour
 
         volume = 0.5f;
 
-        audioSource.clip = musicListSelected.ElementAt(currentTrackSelected);
-        currentSong = audioSource.clip.name;
-        songLenght = audioSource.clip.length;
+        musicMudioSource.clip = musicListSelected.ElementAt(currentTrackSelected);
+        currentSong = musicMudioSource.clip.name;
+        songLenght = musicMudioSource.clip.length;
 
         //try
         {
             musicPlayerPanel = GameObject.Find("Canvas").transform.Find("Music Player Panel").gameObject;
             musicPlayer = musicPlayerPanel.GetComponent<MusicPlayer>();
-            musicPlayer.SetMusicPlayer(audioSource.clip.name, audioSource.clip.length);
+            musicPlayer.SetMusicPlayer(musicMudioSource.clip.name, musicMudioSource.clip.length);
         }
         /*catch (NullReferenceException ex)
         {
@@ -100,11 +102,11 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        audioSource.volume = volume;
-        audioSourcePlaytime = audioSource.time;
+        musicMudioSource.volume = volume;
+        audioSourcePlaytime = musicMudioSource.time;
         if (musicPlayerPanel != null)
         {
-            musicPlayer.MusicProgressBar(audioSourcePlaytime, audioSource.clip.length);
+            musicPlayer.MusicProgressBar(audioSourcePlaytime, musicMudioSource.clip.length);
         }
         if (audioSourcePlaytime >= songLenght)
         {
@@ -128,20 +130,20 @@ public class SoundManager : MonoBehaviour
         {
             currentTrackSelected = musicListSelected.IndexOf(musicListSelected.First());
         }
-        audioSource.clip = musicListSelected.ElementAt(currentTrackSelected);
-        currentSong = audioSource.clip.name;
-        songLenght = audioSource.clip.length;
+        musicMudioSource.clip = musicListSelected.ElementAt(currentTrackSelected);
+        currentSong = musicMudioSource.clip.name;
+        songLenght = musicMudioSource.clip.length;
         if (musicPlayerPanel != null)
         {
-            musicPlayer.SetMusicPlayer(audioSource.clip.name, audioSource.clip.length);
+            musicPlayer.SetMusicPlayer(musicMudioSource.clip.name, musicMudioSource.clip.length);
         }
     }
 
     public void PlayMusic()
     {
-        if (audioSource.clip != null)
+        if (musicMudioSource.clip != null)
         {
-            audioSource.Play();
+            musicMudioSource.Play();
         }
         else
         {
@@ -151,9 +153,9 @@ public class SoundManager : MonoBehaviour
 
     public void PauseMusic()
     {
-        if (audioSource.clip != null)
+        if (musicMudioSource.clip != null)
         {
-            audioSource.Pause();
+            musicMudioSource.Pause();
         }
         else
         {
@@ -163,9 +165,9 @@ public class SoundManager : MonoBehaviour
 
     public void StopMusic()
     {
-        if (audioSource.clip != null)
+        if (musicMudioSource.clip != null)
         {
-            audioSource.Stop();
+            musicMudioSource.Stop();
         }
         else
         {

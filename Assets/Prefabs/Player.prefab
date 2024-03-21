@@ -339,16 +339,13 @@ MonoBehaviour:
   health: 0
   attackDamage: 3
   keys: 0
+  isGrounded: 0
   isHurt: 0
   isDead: 0
   isAttacking: 0
-  isLookingLeft: 0
-  isLookingRight: 0
-  isWalking: 0
-  isIdle: 0
-  playerWon: 0
-  sword: {fileID: 975661811052596222}
+  hasWon: 0
   animator: {fileID: 2003920294848656763}
+  audioSource: {fileID: 6071610552458231237}
   jump: {fileID: 8300000, guid: 9bbaf8025975e584ba1b1337ac9e4663, type: 3}
   hurt: {fileID: 8300000, guid: b29a4a4091849b14e83529adf74d5428, type: 3}
   death: {fileID: 8300000, guid: 119a924f54c584944b9a449879bd9ca3, type: 3}
@@ -358,8 +355,12 @@ MonoBehaviour:
   won: {fileID: 8300000, guid: 508f0cf0fd3800a46a8d3e065bce27dc, type: 3}
   key: {fileID: 8300000, guid: b1cbabd9bd86e194bb9a74c703d7d37f, type: 3}
   message: {fileID: 8300000, guid: b8949f4d02d000e45a87612b3c5cbebd, type: 3}
-  audioSource: {fileID: 6071610552458231237}
-  soundGame: {fileID: 0}
+  swordGameObject: {fileID: 975661811052596222}
+  light2DGameObject: {fileID: 7000024624440363004}
+  soundManagerGameObject: {fileID: 0}
+  soundManagerScript: {fileID: 0}
+  soundManagerAudioSource: {fileID: 0}
+  sceneLoader: {fileID: 0}
 --- !u!114 &1180588664103978136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,16 +385,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245d14b3879cced489094fbf8feb0c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
+  rigidBody: {fileID: 9021725580810601181}
   jumpHeight: 4.5
   speed: 5
-  isGrounded: 0
-  isAttacking: 0
-  isLookingLeft: 0
-  isLookingRight: 0
-  isWalking: 0
-  isIdle: 0
-  playerStats: {fileID: 0}
+  playerStats: {fileID: 796579855498382688}
   gravity: -9.8
 --- !u!114 &6190473417759073518
 MonoBehaviour:

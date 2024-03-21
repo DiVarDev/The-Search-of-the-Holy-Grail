@@ -8,49 +8,85 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // Variables
-    public bool isObjectDestroyOnLoad;
     [Header("Player Info")]
-    public GameObject player;
-    public bool isPlayerDead;
-    public int health;
-    public int keys;
+    public GameObject playerGameObject;
+    public PlayerStats playerStatsScript;
+    public PlayerMovement playerMovementScript;
+
+    [Header("Sound Manager")]
+    public GameObject soundManagerGameObject;
+    public SoundManager soundManagerScript;
+    public AudioSource soundManagerAudioSource;
+
+    [Header("Scene Loader Script")]
+    public SceneLoader sceneLoader;
+
     [Header("User Interface Components")]
-    public Slider healthSlider;
+    public GameObject canvasGameObject;
+    public Slider healthSliderScript;
     public TMP_Text keysText;
     public TMP_Text timerText;
-    public float time;
+    public float time = 145.0f;
+
+    [Header("Game Statistics Manager")]
+    public GameObject gameStatsProgressGameObject;
+    public GameStatsProgress gameStatsProgressScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (!isObjectDestroyOnLoad)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        player = GameObject.Find("Player");
-        isPlayerDead = player.GetComponent<PlayerStats>().isDead;
-        keys = 0;
+        playerGameObject = GameObject.Find("Player");
+        playerStatsScript = playerGameObject.GetComponent<PlayerStats>();
+        playerStatsScript.health = playerStatsScript.maxHealth;
+        playerMovementScript = playerGameObject.GetComponent<PlayerMovement>();
+        
+        soundManagerGameObject = GameObject.Find("Sound Manager").gameObject;
+        soundManagerScript = soundManagerGameObject.GetComponent<SoundManager>();
+        soundManagerAudioSource = soundManagerGameObject.GetComponent<AudioSource>();
 
-        healthSlider = GameObject.Find("Canvas").transform.Find("Health Slider").GetComponent<Slider>();
-        healthSlider.maxValue = player.GetComponent<PlayerStats>().maxHealth;
-        keysText = GameObject.Find("Canvas").transform.Find("Player Keys Text").GetComponent<TMP_Text>();
+        sceneLoader = gameObject.GetComponent<SceneLoader>();
 
-        timerText = GameObject.Find("Canvas").transform.Find("Player Timer Text").GetComponent<TMP_Text>();
-        time = 145.0f;
+        canvasGameObject = GameObject.Find("Canvas").gameObject;
+        healthSliderScript = canvasGameObject.transform.Find("Health Slider").GetComponent<Slider>();
+        healthSliderScript.maxValue = playerGameObject.GetComponent<PlayerStats>().maxHealth;
+        keysText = canvasGameObject.transform.Find("Player Keys Text").GetComponent<TMP_Text>();
+        timerText = canvasGameObject.transform.Find("Player Timer Text").GetComponent<TMP_Text>();
+
+        gameStatsProgressGameObject = GameObject.Find("Game Stats Progress").gameObject;
+        gameStatsProgressScript = gameStatsProgressGameObject.GetComponent<GameStatsProgress>();
+
+        Debug.Log($"Scene detected: {soundManagerScript.sceneName} with index {soundManagerScript.sceneIndex}");
+
+        if (gameStatsProgressScript.GetPlayerHealth() == 0 || gameStatsProgressScript.GetTimeLeft() == 0 || gameStatsProgressScript.GetKeysCollected() == 0)
+        {
+            Debug.Log("New Values Scriptable");
+            gameStatsProgressScript.SetPlayerHealth(playerStatsScript.maxHealth);
+            gameStatsProgressScript.SetTimeLeft(time);
+            gameStatsProgressScript.SetKeysCollected(playerStatsScript.keys);
+        }
+        else
+        {
+            Debug.Log("Old Values Scriptable");
+            playerStatsScript.health = gameStatsProgressScript.GetPlayerHealth();
+            time = gameStatsProgressScript.GetTimeLeft();
+            playerStatsScript.keys = gameStatsProgressScript.GetKeysCollected();
+        }
+
         StartCoroutine(IniciarCountdown());
     }
 
     // Update is called once per frame
     void Update()
     {
-        health = player.GetComponent<PlayerStats>().health;
-        healthSlider.value = player.GetComponent<PlayerStats>().health;
-        keys = player.GetComponent<PlayerStats>().keys;
-        keysText.text = keys.ToString();
+        healthSliderScript.value = playerGameObject.GetComponent<PlayerStats>().health;
+        keysText.text = playerGameObject.GetComponent<PlayerStats>().keys.ToString();
+
+        gameStatsProgressScript.SetPlayerHealth(playerStatsScript.health);
+        gameStatsProgressScript.SetTimeLeft(time);
+        gameStatsProgressScript.SetKeysCollected(playerStatsScript.keys);
     }
 
     // IEnumerators
@@ -63,12 +99,52 @@ public class GameManager : MonoBehaviour
             time--;
         }
         timerText.text = "Time ran out!";
-        player.GetComponent<PlayerStats>().isDead = true;
+        playerGameObject.GetComponent<PlayerStats>().isDead = true;
         Debug.Log("Player has run out of time...");
-        gameObject.SetActive(false);
-        Invoke("LoadLose", player.GetComponent<PlayerStats>().death.length);
+        playerGameObject.SetActive(false);
+        HasLost();
     }
 
     // Functions
+    public void HasWon()
+    {
+        Destroy(gameStatsProgressGameObject);
+        Invoke("LoadWin", playerStatsScript.won.length);
+    }
+    
+    public void HasLost()
+    {
+        Destroy(gameStatsProgressGameObject);
+        Invoke("LoadLose", playerStatsScript.death.length);
+    }
 
+    public void LoadMenu() // Function to load Scene
+    {
+        sceneLoader.LoadSceneAsyncByIndex(0);
+    }
+
+    public void LoadLightForest() // Function to load Scene
+    {
+        sceneLoader.LoadSceneAsyncByIndex(1);
+    }
+
+    public void LoadDarkForest() // Function to load Scene
+    {
+        sceneLoader.LoadSceneAsyncByIndex(2);
+    }
+
+    public void LoadDungeon() // Function to load Scene
+    {
+        sceneLoader.LoadSceneAsyncByIndex(3);
+    }
+
+    public void LoadLose() // Function to load Scene
+    {
+        sceneLoader.LoadSceneAsyncByIndex(4);
+    }
+
+    public void LoadWin() // Function to load Scene
+    {
+        sceneLoader.LoadSceneAsyncByIndex(5);
+    }
 }

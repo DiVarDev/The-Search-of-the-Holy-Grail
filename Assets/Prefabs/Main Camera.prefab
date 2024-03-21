@@ -106,11 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9884b6f5b7ad2314d842ee76730fdcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isObjectDestroyOnLoad: 0
   cameraFollowingPlayer: {fileID: 1592662055647818098}
   cameraPosition: {x: 0, y: 0, z: 0}
-  minimum: {x: -1, y: -21}
-  maximum: {x: 77.3, y: 20}
+  minimum: {x: 0, y: 0}
+  maximum: {x: 0, y: 0}
   offsets: {x: 0, y: 2}
   smoothing: 0
   velocity: {x: 0, y: 0}

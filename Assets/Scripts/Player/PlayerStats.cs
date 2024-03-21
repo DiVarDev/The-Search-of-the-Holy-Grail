@@ -6,24 +6,22 @@ using UnityEngine.SceneManagement;
 public class PlayerStats : MonoBehaviour
 {
     // Variables
-    [Header("Player Statistics")]
+    [Header("Statistics")]
     public int maxHealth = 100;
     public int health;
     public int attackDamage = 3;
     public int keys = 0;
+    public bool isGrounded = false;
     public bool isHurt = false;
     public bool isDead = false;
     public bool isAttacking = false;
-    public bool isLookingLeft = false;
-    public bool isLookingRight = false;
-    public bool isWalking = false;
-    public bool isIdle = false;
-    public bool playerWon = false;
-    [Header("Player Components")]
-    public GameObject sword;
-    [Header("Player Animations")]
+    public bool hasLost = false;
+    public bool hasWon = false;
+    [Header("Animator")]
     public Animator animator;
-    [Header("Player Sounds")]
+    [Header("Audio Source")]
+    public AudioSource audioSource;
+    [Header("Sounds")]
     public AudioClip jump;
     public AudioClip hurt;
     public AudioClip death;
@@ -33,76 +31,38 @@ public class PlayerStats : MonoBehaviour
     public AudioClip won;
     public AudioClip key;
     public AudioClip message;
-    [Header("Sound")]
-    public AudioSource audioSource;
-    public AudioSource soundGame;
-    public GameObject soundManager;
-    [Header("Scene Loader Script")]
-    public SceneLoader sceneLoader;
+    [Header("Child GameObjects")]
+    public GameObject light2DGameObject;
+    public GameObject swordGameObject;
+
+    [Header("Game Manager GameObject")]
+    public GameObject gameManagerGameObject;
+    public GameManager gameManagerScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
-
-        soundGame = GameObject.Find("Sound Manager").transform.Find("Sound Game").GetComponent<AudioSource>();
-        soundManager = GameObject.Find("Sound Manager").gameObject;
-
-        sceneLoader = gameObject.AddComponent<SceneLoader>();
+        gameManagerGameObject = GameObject.Find("Game Manager").gameObject;
+        gameManagerScript = gameManagerGameObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        isLookingLeft = animator.GetBool("isLookingLeft");
-        isLookingRight = animator.GetBool("isLookingRight");
-        isIdle = gameObject.GetComponent<PlayerMovement>().isIdle;
 
-        CheckPlayerStatus();
     }
 
     // Functions
-    private void CheckPlayerStatus()
-    {
-        if (health <= 0 || isDead)
-        {
-            isDead = true;
-            soundManager.GetComponent<SoundManager>().playMusic = false;
-            soundManager.GetComponent<AudioSource>().Stop();
-            soundGame.PlayOneShot(death);
-            Debug.Log("Player was hurt by an enemy to death...");
-            gameObject.SetActive(false);
-            Invoke("LoadLose", death.length);
-        }
-    }
-
-    public void LoadDarkForest() // Function to load Scene
-    {
-        sceneLoader.LoadSceneAsyncByIndex(2);
-    }
-
-    public void LoadDungeon() // Function to load Scene
-    {
-        sceneLoader.LoadSceneAsyncByIndex(3);
-    }
-
-    public void LoadLose() // Function to load Scene
-    {
-        Destroy(GameObject.Find("Game Manager"));
-        Destroy(GameObject.Find("Sound Manager"));
-        sceneLoader.LoadSceneAsyncByIndex(4);
-    }
-
-    public void LoadWin() // Function to load Scene
-    {
-        Destroy(GameObject.Find("Game Manager"));
-        Destroy(GameObject.Find("Sound Manager"));
-        sceneLoader.LoadSceneAsyncByIndex(5);
-    }
 
     // Collisions
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.tag == "Ground" || other.gameObject.tag == "Platform")
+        {
+            isGrounded = true;
+            Debug.Log("Player touching ground or a platform!");
+        }
+
         if (other.gameObject.tag == "Enemy")
         {
             if (transform.GetComponent<PolygonCollider2D>().IsTouching(other.collider))
@@ -110,26 +70,35 @@ public class PlayerStats : MonoBehaviour
                 if (health > 0)
                 {
                     health -= other.gameObject.GetComponent<EnemyStats>().attackDamage;
-                    audioSource.PlayOneShot(hurt);
+                    gameManagerScript.soundManagerAudioSource.PlayOneShot(hurt);
                     Debug.Log("Player is taking damage...");
+                }
+                else if (health <= 0)
+                {
+                    isDead = true;    // Set the player died
+                    gameManagerScript.soundManagerScript.StopMusic(); // Stop the music audio source from playing music
+                    gameManagerScript.soundManagerAudioSource.PlayOneShot(death);   // Play the death sound on the audio source
+                                                                                    // referenced in the SoundManager script
+                    Debug.Log("Player was hurt by an enemy to death...");
+                    gameManagerScript.playerGameObject.SetActive(false);
+                    gameManagerScript.HasLost();
                 }
             }
         }
-        
+
         if (other.gameObject.tag == "Lava")
         {
             isDead = true;
-            soundManager.GetComponent<SoundManager>().playMusic = false;
-            soundManager.GetComponent<AudioSource>().Stop();
-            soundGame.PlayOneShot(death);
+            gameManagerScript.soundManagerScript.StopMusic();
+            gameManagerScript.soundManagerAudioSource.PlayOneShot(death);
             Debug.Log("Player was melted to death...");
-            gameObject.SetActive(false);
-            Invoke("LoadLose", death.length);
+            gameManagerScript.playerGameObject.SetActive(false);
+            gameManagerScript.HasLost();
         }
 
         if (other.gameObject.tag == "Barrier")
         {
-            audioSource.PlayOneShot(message);
+            gameManagerScript.soundManagerAudioSource.PlayOneShot(message);
             // Show message
             Debug.Log("Player has collided with a barrier!");
             //other.gameObject.SetActive(false);
@@ -137,7 +106,7 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.tag == "Key")
         {
-            audioSource.PlayOneShot(key);
+            gameManagerScript.soundManagerAudioSource.PlayOneShot(key);
             keys++;
             Debug.Log("Player collected a key!");
             other.gameObject.SetActive(false);
@@ -145,13 +114,12 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.tag == "Grail")
         {
-            playerWon = true;
-            soundManager.GetComponent<SoundManager>().playMusic = false;
-            soundManager.GetComponent<AudioSource>().Stop();
-            audioSource.PlayOneShot(won);
+            hasWon = true;
+            gameManagerScript.soundManagerScript.StopMusic();
+            gameManagerScript.soundManagerAudioSource.PlayOneShot(won);
             Debug.Log("Player retrieved the holy grail and finished the level!");
-            //other.gameObject.SetActive(false);
-            Invoke("LoadWin", won.length);
+            gameManagerScript.playerGameObject.SetActive(false);
+            gameManagerScript.HasWon();
         }
     }
 
@@ -163,8 +131,23 @@ public class PlayerStats : MonoBehaviour
             //audioSource.PlayOneShot(won);
             Debug.Log("Player retrieved the holy grail and finished the level!");
             //other.gameObject.SetActive(false);
-            Invoke("LoadDarkForest", 0.0f);
-            
+
+            switch (gameManagerScript.soundManagerScript.sceneIndex + 1)
+            {
+                case 1:
+                    gameManagerScript.LoadLightForest();
+                    break;
+                case 2:
+                    gameManagerScript.LoadDarkForest();
+                    break;
+                case 3:
+                    gameManagerScript.LoadDungeon();
+                    break;
+                default:
+                    gameManagerScript.LoadMenu();
+                    break;
+            }
+
         }
     }
 
