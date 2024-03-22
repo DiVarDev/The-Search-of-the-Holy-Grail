@@ -49,13 +49,18 @@ MonoBehaviour:
   playerStatsScript: {fileID: 0}
   playerMovementScript: {fileID: 0}
   soundManagerGameObject: {fileID: 0}
+  soundManagerScript: {fileID: 0}
+  soundManagerAudioSource: {fileID: 0}
+  sceneLoader: {fileID: 0}
   canvasGameObject: {fileID: 0}
   healthSliderScript: {fileID: 0}
   keysText: {fileID: 0}
   timerText: {fileID: 0}
-  time: 0
-  gameStatisticsManagerGameObject: {fileID: 0}
-  statisticsManagerScript: {fileID: 0}
+  time: 250
+  elapsedSeconds: 0
+  minutes: 0
+  gameStatsProgressGameObject: {fileID: 0}
+  gameStatsProgressScript: {fileID: 0}
 --- !u!114 &3598865557720186362
 MonoBehaviour:
   m_ObjectHideFlags: 0

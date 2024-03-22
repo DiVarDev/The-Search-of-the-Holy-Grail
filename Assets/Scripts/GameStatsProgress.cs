@@ -5,9 +5,8 @@ using UnityEngine;
 public class GameStatsProgress : MonoBehaviour
 {
     // Variables
-    public bool isObjectDestroyedOnload = false;
     [Header("Stats Values")]
-    public int playerHealth;
+    public float playerHealth;
     public float timeLeft;
     public int keysCollected;
 
@@ -24,12 +23,12 @@ public class GameStatsProgress : MonoBehaviour
     }
 
     // Functions
-    public int GetPlayerHealth()
+    public float GetPlayerHealth()
     {
         return playerHealth;
     }
 
-    public void SetPlayerHealth(int value)
+    public void SetPlayerHealth(float value)
     {
         playerHealth = value;
     }

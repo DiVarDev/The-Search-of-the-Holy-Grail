@@ -343,6 +343,7 @@ MonoBehaviour:
   isHurt: 0
   isDead: 0
   isAttacking: 0
+  hasLost: 0
   hasWon: 0
   animator: {fileID: 2003920294848656763}
   audioSource: {fileID: 6071610552458231237}
@@ -355,12 +356,10 @@ MonoBehaviour:
   won: {fileID: 8300000, guid: 508f0cf0fd3800a46a8d3e065bce27dc, type: 3}
   key: {fileID: 8300000, guid: b1cbabd9bd86e194bb9a74c703d7d37f, type: 3}
   message: {fileID: 8300000, guid: b8949f4d02d000e45a87612b3c5cbebd, type: 3}
-  swordGameObject: {fileID: 975661811052596222}
   light2DGameObject: {fileID: 7000024624440363004}
-  soundManagerGameObject: {fileID: 0}
-  soundManagerScript: {fileID: 0}
-  soundManagerAudioSource: {fileID: 0}
-  sceneLoader: {fileID: 0}
+  swordGameObject: {fileID: 975661811052596222}
+  gameManagerGameObject: {fileID: 0}
+  gameManagerScript: {fileID: 0}
 --- !u!114 &1180588664103978136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,7 +415,7 @@ MonoBehaviour:
   - {x: 0.96000004, y: -0.96000004, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 47124
+  m_InstanceId: 114480
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.96000004, y: 0.96000004, z: 0}
@@ -460,7 +459,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975661811052596222}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -512,7 +511,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975661811052596222}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

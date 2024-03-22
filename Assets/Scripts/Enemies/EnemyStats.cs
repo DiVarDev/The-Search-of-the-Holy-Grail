@@ -6,9 +6,9 @@ public class EnemyStats : MonoBehaviour
 {
     // Variables
     [Header("Enemy Statistics")]
-    public int maxHealth = 25;
-    public int health;
-    public int attackDamage = 5;
+    public float maxHealth = 25.0f;
+    public float health;
+    public float attackDamage = 5.0f;
     public bool hasJump = false;
     public bool isHurt = false;
     public bool isDead = false;

@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour
     public Slider healthSliderScript;
     public TMP_Text keysText;
     public TMP_Text timerText;
-    public float time = 145.0f;
+    public float time = 250.0f;
+    public int elapsedSeconds;
+    public int minutes;
 
     [Header("Game Statistics Manager")]
     public GameObject gameStatsProgressGameObject;
@@ -62,14 +64,14 @@ public class GameManager : MonoBehaviour
 
         if (gameStatsProgressScript.GetPlayerHealth() == 0 || gameStatsProgressScript.GetTimeLeft() == 0 || gameStatsProgressScript.GetKeysCollected() == 0)
         {
-            Debug.Log("New Values Scriptable");
-            gameStatsProgressScript.SetPlayerHealth(playerStatsScript.maxHealth);
+            Debug.Log("New values to be assigned");
+            gameStatsProgressScript.SetPlayerHealth(playerStatsScript.health);
             gameStatsProgressScript.SetTimeLeft(time);
             gameStatsProgressScript.SetKeysCollected(playerStatsScript.keys);
         }
         else
         {
-            Debug.Log("Old Values Scriptable");
+            Debug.Log("Old values to be assigned");
             playerStatsScript.health = gameStatsProgressScript.GetPlayerHealth();
             time = gameStatsProgressScript.GetTimeLeft();
             playerStatsScript.keys = gameStatsProgressScript.GetKeysCollected();
@@ -94,7 +96,15 @@ public class GameManager : MonoBehaviour
     {
         while (time > 0)
         {
-            timerText.text = "Time Left: " + time.ToString();
+            // Calculate the elapsed time in seconds
+            elapsedSeconds = Mathf.RoundToInt(time % 60);
+
+            // Calculate the elapsed time in minutes
+            minutes = Mathf.FloorToInt(time / 60);
+
+            // Update the UI text with the progress (e.g., "3:48")
+            timerText.text = $"Time Left: {minutes}:{elapsedSeconds:D2}";
+            //timerText.text = "Time Left: " + time.ToString();
             yield return new WaitForSeconds(1f);
             time--;
         }
@@ -108,12 +118,14 @@ public class GameManager : MonoBehaviour
     // Functions
     public void HasWon()
     {
+        StopCoroutine(IniciarCountdown());
         Destroy(gameStatsProgressGameObject);
         Invoke("LoadWin", playerStatsScript.won.length);
     }
     
     public void HasLost()
     {
+        StopCoroutine(IniciarCountdown());
         Destroy(gameStatsProgressGameObject);
         Invoke("LoadLose", playerStatsScript.death.length);
     }

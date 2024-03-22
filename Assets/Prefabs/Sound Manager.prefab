@@ -145,34 +145,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132133956789dc94ca6910cec48eabd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isObjectDestroyOnLoad: 0
+  playMusic: 1
   sceneIndex: 0
   sceneName: 
   musicMenuList:
+  - {fileID: 8300000, guid: db43575feaae7c24595c081d5184f9b0, type: 3}
   - {fileID: 8300000, guid: 7d4079c2772e519438f96bc1262a8282, type: 3}
-  - {fileID: 8300000, guid: 87d0ad1040a3d4042b07b8f1b6a1e721, type: 3}
-  - {fileID: 8300000, guid: 0b999bae02c26a84894292f7a53df0b3, type: 3}
+  - {fileID: 8300000, guid: 824c77eac49236d47be8d3fe4cfb9393, type: 3}
+  - {fileID: 8300000, guid: adf7f3af67772d3418913a33d60dc8ca, type: 3}
+  - {fileID: 8300000, guid: 9ea3ce6a11b61734b81e3d57798927cd, type: 3}
+  - {fileID: 8300000, guid: a134cceeecaf4c141b9c33d5b206b61a, type: 3}
   musicLoseMenuList:
-  - {fileID: 8300000, guid: 36b81b0057be76542ac45ac1618491c2, type: 3}
-  - {fileID: 8300000, guid: 1ee3af597c929ac45a0ace48505e99f4, type: 3}
-  - {fileID: 8300000, guid: fda3897ed267cfa4da53d47477e69b0a, type: 3}
+  - {fileID: 8300000, guid: 9859a61eba174514f8f243d5b569a353, type: 3}
   musicWinMenuList:
-  - {fileID: 8300000, guid: 82b7e6efe2175ea4c975b311f326b079, type: 3}
+  - {fileID: 8300000, guid: 75f1a70d92adf484fb7ac227cf9a831a, type: 3}
+  - {fileID: 8300000, guid: 02b292bf7cdbd0a4385755ae7c12a901, type: 3}
   musicLightForestList:
-  - {fileID: 8300000, guid: de9e946e0e4d1b44788a7761a29a7b31, type: 3}
-  - {fileID: 8300000, guid: 8ce05b7d3f1ea1a459141690403c7a7b, type: 3}
+  - {fileID: 8300000, guid: 7b574fa6e1263d44486b2ab48405e3a1, type: 3}
   musicDarkForestList:
-  - {fileID: 8300000, guid: 35cb1b1ea2f4a664ba0970288425d352, type: 3}
+  - {fileID: 8300000, guid: c34bde88772f25a45b28d2623952c632, type: 3}
   musicDungeonList:
-  - {fileID: 8300000, guid: d61e7c8d9c228af4e825f079c47bc80a, type: 3}
+  - {fileID: 8300000, guid: 5d56212c011dec64b96ba20774855f86, type: 3}
   musicListSelected: []
   musicListCount: 0
   currentTrackSelected: 0
   currentSong: 
   songLenght: 0
-  audioSource: {fileID: 0}
+  musicMudioSource: {fileID: 0}
   volume: 0
   audioSourcePlaytime: 0
+  soundGameGameObject: {fileID: 0}
   musicPlayerPanel: {fileID: 0}
   musicPlayer: {fileID: 0}
 --- !u!1 &1977162425866448520

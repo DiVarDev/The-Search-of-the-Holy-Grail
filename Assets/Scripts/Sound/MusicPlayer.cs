@@ -54,8 +54,6 @@ public class MusicPlayer : MonoBehaviour
 
     public void MusicProgressBar(float audioSourcePlaytime, float clipLength)
     {
-        /*musicProgress.text = Mathf.RoundToInt(audioSourcePlaytime % 60) + "/" + Mathf.RoundToInt(currentSong.length % 60);*/
-
         // Calculate the elapsed time in seconds
         elapsedSeconds = Mathf.RoundToInt(audioSourcePlaytime % 60);
 

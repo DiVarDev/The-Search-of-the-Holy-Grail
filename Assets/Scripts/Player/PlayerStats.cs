@@ -7,9 +7,9 @@ public class PlayerStats : MonoBehaviour
 {
     // Variables
     [Header("Statistics")]
-    public int maxHealth = 100;
-    public int health;
-    public int attackDamage = 3;
+    public float maxHealth = 100.0f;
+    public float health;
+    public float attackDamage = 3;
     public int keys = 0;
     public bool isGrounded = false;
     public bool isHurt = false;
